@@ -1,15 +1,28 @@
 import os
 import wandb
-from loadotenv import load_env
+from loadotenv import load_env # removed in GCP deployment
 from pathlib import Path
 import torch
 from torchvision.models import resnet18, ResNet
 from torch import nn
-
 from torchvision.transforms import v2 as transforms
 
 
-load_env()
+#todo: remember to delete the use of the 
+# loadotenv and os.getenv entries 
+# when we use the Docker image later
+#from loadotenv import load_env
+
+#load_env(file_loc='/workspaces/fruit-classifier-endpoint/app/.env')
+
+MODELS_DIR = 'models'
+MODEL_FILE_NAME = 'best_model.pth'
+
+CATEGORIES = ["freshapple", "freshbanana", "freshoranges", 
+              "rottenapple", "rottenbanana", "rottenoranges"]
+
+
+load_env() # This will be removed for the GCP deployment
 wandb_api_key = os.environ.get('WANDB_API_KEY')
 
 MODELS_DIR = 'models'
@@ -69,4 +82,3 @@ def load_transforms() -> transforms.Compose:
                              [0.229, 0.224, 0.225])
     ])
 
-print(load_model())
