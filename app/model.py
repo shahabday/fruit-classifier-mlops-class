@@ -5,7 +5,8 @@ from pathlib import Path
 import torch
 from torchvision.models import resnet18, ResNet
 from torch import nn
-from torchvision import transforms
+
+from torchvision.transforms import v2 as transforms
 
 
 load_env()
@@ -57,5 +58,15 @@ def load_model() -> ResNet:
     model.eval()
     return model
 
+
+def load_transforms() -> transforms.Compose:
+    return transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToImage(),
+        transforms.ToDtype(torch.float32, scale=True),
+        transforms.Normalize([0.485, 0.456, 0.406],
+                             [0.229, 0.224, 0.225])
+    ])
 
 print(load_model())
