@@ -18,8 +18,8 @@ from torchvision.transforms import v2 as transforms
 MODELS_DIR = 'models'
 MODEL_FILE_NAME = 'best_model.pth'
 
-CATEGORIES = ["freshapple", "freshbanana", "freshoranges", 
-              "rottenapple", "rottenbanana", "rottenoranges"]
+CATEGORIES = ["freshapple", "freshbanana", "freshorange", 
+              "rottenapple", "rottenbanana", "rottenorange"]
 
 
 load_env() # This will be removed for the GCP deployment
