@@ -50,7 +50,8 @@ def load_model() -> ResNet:
     # Get the trained model weights
     model_state_dict_path = Path(MODELS_DIR) / MODEL_FILE_NAME
     model_state_dict = torch.load(model_state_dict_path, map_location='cpu')
-    # Assing the trained model weights to model
+    # Assign the trained model weights to model, this will fail for incomplete files 
+    # Check the file size on wandb.ai, the resnet18 artifact should have 45.8 MB in size
     model.load_state_dict(model_state_dict, strict=True)
     # Turn off BatchNorm and Dropout
     model.eval()
