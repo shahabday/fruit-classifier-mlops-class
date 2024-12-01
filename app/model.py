@@ -10,10 +10,9 @@ from torchvision import transforms
 
 load_env()
 wandb_api_key = os.environ.get('WANDB_API_KEY')
-print(wandb_api_key)
 
 MODELS_DIR = 'models'
-MODEL_FILE_NAME = 'best_model.pth'
+MODEL_FILE_NAME = 'best_model.pth' # Take note that in other examples we called this model.pth
 
 os.makedirs(MODELS_DIR, exist_ok=True)
 
@@ -43,4 +42,19 @@ def get_raw_model() -> ResNet:
 
     return architecture 
 
-print(get_raw_model())
+
+def load_model() -> ResNet:
+    """This returns the model with its wandb weights"""
+    download_artifact()
+    model = get_raw_model()
+    # Get the trained model weights
+    model_state_dict_path = Path(MODELS_DIR) / MODEL_FILE_NAME
+    model_state_dict = torch.load(model_state_dict_path, map_location='cpu')
+    # Assing the trained model weights to model
+    model.load_state_dict(model_state_dict, strict=True)
+    # Turn off BatchNorm and Dropout
+    model.eval()
+    return model
+
+
+print(load_model())
