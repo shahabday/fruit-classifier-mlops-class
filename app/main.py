@@ -38,7 +38,7 @@ async def predict(
     # Here we delete the alpha channel, the model doesn't use it
     # and will complain if the input has it     
     if image.mode == 'RGBA':
-        image.convert('RGB')
+        image = image.convert('RGB')
 
     # Here we add a batch dimension of 1 
     image = transforms(image).unsqueeze(0)
