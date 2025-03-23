@@ -1,6 +1,6 @@
 import os
 import wandb
-# from loadotenv import load_env # removed in GCP deployment
+from loadotenv import load_env # removed in GCP deployment
 from pathlib import Path
 import torch
 from torchvision.models import resnet18, ResNet
@@ -30,7 +30,7 @@ MODEL_FILE_NAME = 'best_model.pth' # Take note that in other examples we called 
 os.makedirs(MODELS_DIR, exist_ok=True)
 
 def download_artifact():
-    #assert 'WANDB_API_KEY' in os.environ, 'Please enter the wandb API key'
+    assert 'WANDB_API_KEY' in os.environ, 'Please enter the wandb API key'
 
     wandb_org = os.environ.get('WANDB_ORG')
     wandb_project = os.environ.get('WANDB_PROJECT')
@@ -39,7 +39,7 @@ def download_artifact():
 
     artifact_path = f"{wandb_org}/{wandb_project}/{wandb_model_name}:{wandb_model_version}"
 
-    wandb.login()
+    wandb.login(key=wandb_api_key)
     artifact = wandb.Api().artifact(artifact_path, type='model')
     artifact.download(root=MODELS_DIR)
 
@@ -81,3 +81,4 @@ def load_transforms() -> transforms.Compose:
                              [0.229, 0.224, 0.225])
     ])
 
+download_artifact()
