@@ -21,7 +21,7 @@ CATEGORIES = ["freshapple", "freshbanana", "freshorange",
               "rottenapple", "rottenbanana", "rottenorange"]
 
 
-#load_env() # This will be removed for the GCP deployment
+load_env() # This will be removed for the GCP deployment
 wandb_api_key = os.environ.get('WANDB_API_KEY')
 
 MODELS_DIR = 'models'
